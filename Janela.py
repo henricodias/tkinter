@@ -39,4 +39,25 @@ def buscar_cotacao():
 
 botao = tk.Button(text="Buscar Cotação", command=buscar_cotacao)
 botao.grid(row=2, column=1)
+
+mensagem3 = tk.Label(text="Para mais de 1 cotação, digite uma moeda em cadas linha")
+mensagem3.grid(row=4, column=0, columnspan=2)
+
+caixaTexto = tk.Text(width=10, height=5)
+caixaTexto.grid(row=5, column=0, sticky='NSEW')
+
+def buscar_cotacoes():
+    texto = caixaTexto.get("1.0", tk.END)
+    listaMoedas = texto.split('\n')
+    mensagemCotacoes = []
+    for item in listaMoedas:
+        cotacao = dicionarioCotacoes.get(item)
+        if cotacao:
+            mensagemCotacoes.append(f'{item} : {cotacao}')
+    mensagem4 = tk.Label(text='\n'.join(mensagemCotacoes))
+    mensagem4.grid(row=6, column=1)
+
+
+botaoMultiplasCotacoes = tk.Button(text="Buscar Cotações", command=buscar_cotacoes)
+botaoMultiplasCotacoes.grid(row=5, column=1)
 janela.mainloop()
