@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 janela = tk.Tk()
 
@@ -13,14 +14,18 @@ mensagem.grid(row=0, column=0, columnspan=2, sticky="NSEW")
 mensagem2 = tk.Label(text="Selecione a moeda desejada")
 mensagem2.grid(row=1, column=0)
 
-moeda = tk.Entry()
-moeda.grid(row=1, column=1)
+# moeda = tk.Entry()
+# moeda.grid(row=1, column=1)
 
 dicionarioCotacoes = {
     'Dólar': 5.47,
     'Euro': 6.68,
     'Bitcoin': 20000,
 }
+
+moedas = list(dicionarioCotacoes.keys())
+moeda = ttk.Combobox(janela, values=moedas)
+moeda.grid(row=1, column=1)
 
 
 def buscar_cotacao():
