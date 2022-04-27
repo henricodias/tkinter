@@ -1,12 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
 from tkcalendar import DateEntry
+import requests
 
 janela = tk.Tk()
 
 janela.title('Ferramenta de Cotação de Moedas')
 
-listaMoedas = ['USD', 'BTC']
+requisicao = requests.get('https://economia.awesomeapi.com.br/json/all')
+
+dicionarioMoedas = requisicao.json()
+
+listaMoedas = list(dicionarioMoedas.keys())
 
 def BuscarCotacao():
     pass
