@@ -8,13 +8,21 @@ janela = tk.Tk()
 janela.title('Ferramenta de Cotação de Moedas')
 
 requisicao = requests.get('https://economia.awesomeapi.com.br/json/all')
-
 dicionarioMoedas = requisicao.json()
 
 listaMoedas = list(dicionarioMoedas.keys())
 
 def BuscarCotacao():
-    pass
+    moeda = comboboxSelecionarMoeda.get()
+    dataCotacao = calendarioMoeda.get()
+    ano = dataCotacao[-4:]
+    mes = dataCotacao[3:5]
+    dia = dataCotacao[:2]
+    link = f"https://economia.awesomeapi.com.br/json/daily/{moeda}-BRL/?start_date={ano}{mes}{dia}&end_date={ano}{mes}{dia}"
+    requisicaoMoeda = requests.get(link)
+    cotacao = requisicaoMoeda.json()
+    valorMoeda = cotacao[0]['bid']
+    labelExibirCotacao['text'] = f"Cotação de {moeda} em {dataCotacao}: R$ {valorMoeda}"
 
 def SelecionarArquivo():
     pass
