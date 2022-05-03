@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter.filedialog import askopenfilename
 from tkcalendar import DateEntry
 import requests
 
@@ -11,6 +12,8 @@ requisicao = requests.get('https://economia.awesomeapi.com.br/json/all')
 dicionarioMoedas = requisicao.json()
 
 listaMoedas = list(dicionarioMoedas.keys())
+
+varCaminhoArquivo = tk.StringVar(value='Vazio')
 
 def BuscarCotacao():
     moeda = comboboxSelecionarMoeda.get()
@@ -25,7 +28,10 @@ def BuscarCotacao():
     labelExibirCotacao['text'] = f"Cotação de {moeda} em {dataCotacao}: R$ {valorMoeda}"
 
 def SelecionarArquivo():
-    pass
+    caminhoArquivo = askopenfilename(title='Selecione o arquivo')
+    varCaminhoArquivo.set(caminhoArquivo)
+    if caminhoArquivo:
+        labelArquivoSelecionado['text'] = f"Arquivo selecionado: {caminhoArquivo}"
 
 def AtualizarCotacoes():
     pass
