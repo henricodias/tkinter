@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 from tkcalendar import DateEntry
+import pandas as pd
 import requests
 
 janela = tk.Tk()
@@ -34,7 +35,23 @@ def SelecionarArquivo():
         labelArquivoSelecionado['text'] = f"Arquivo selecionado: {caminhoArquivo}"
 
 def AtualizarCotacoes():
-    pass
+    df = pd.read_excel(varCaminhoArquivo.get())    #ler dataframe de moedas
+    moedas = df.iloc[:,0]
+    dataInicial = calendarioDataInicial.get()      #pegar a data inicial
+    dataFinal = calendarioDataFinal.get()          #pegar a data final
+    anoInicial = dataInicial[-4:]
+    mesInicial = dataInicial[3:5]
+    diaInicial = dataInicial[:2]
+    anoFinal = dataFinal[-4:]
+    mesFinal = dataFinal[3:5]
+    diaFinal = dataFinal[:2]
+
+    for moeda in moedas:
+        link = f"https://economia.awesomeapi.com.br/json/daily/{moeda}-BRL/?" \
+               f"start_date={anoInicial}{mesInicial}{diaInicial}&end_date={anoFinal}{mesFinal}{diaFinal}"
+        requisicaoMoeda = requests.get(link)
+        cotacoes = requisicaoMoeda.json()
+
 
 labelCotacaoMoeda = tk.Label(text='Cotação de uma moeda específica', borderwidth=2, relief='solid')
 labelCotacaoMoeda.grid(row=0, column=0, padx=10, pady=10, sticky='NSEW', columnspan=3)
